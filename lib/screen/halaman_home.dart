@@ -1,5 +1,4 @@
 import 'package:belajar_provider_api_inventory/helper/sharedpref_helper.dart';
-import 'package:belajar_provider_api_inventory/model/response_barang_model.dart';
 import 'package:belajar_provider_api_inventory/provider/barang_provider.dart';
 import 'package:belajar_provider_api_inventory/screen/halaman_login.dart';
 import 'package:belajar_provider_api_inventory/screen/halaman_search.dart';
@@ -14,6 +13,8 @@ class HalamanHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<BarangProvider>(context,listen: false).getListBarang();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Aplikasi Inventory'),
@@ -38,40 +39,30 @@ class HalamanHome extends StatelessWidget {
         ],
       ),
       body: Center(
-          child: FutureBuilder<List<Barang>>(
-              future: Provider.of<BarangProvider>(context, listen: false)
-                  .getListBarang(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  final listBarang = snapshot.data;
-
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemCount: listBarang.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          splashColor: Colors.green,
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: itemBarang(listBarang[index]),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HalamanTambahEdit(
-                                          listBarang[index],
-                                        )));
-                          },
-                        );
-                      },
-                    ),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              })),
+          child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemCount: Provider.of<BarangProvider>(context).listBarang.length,
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              splashColor: Colors.green,
+              borderRadius: BorderRadius.circular(10.0),
+              child: itemBarang(
+                  Provider.of<BarangProvider>(context).listBarang[index]),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HalamanTambahEdit(
+                              Provider.of<BarangProvider>(context).listBarang[index],
+                            )));
+              },
+            );
+          },
+        ),
+      )),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
