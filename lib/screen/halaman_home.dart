@@ -74,9 +74,11 @@ class HalamanHome extends StatelessWidget {
               })),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
+        onPressed: () async {
+          String message = await Navigator.push(context,
               MaterialPageRoute(builder: (context) => HalamanTambahEdit(null)));
+
+          print("pesan $message");
         },
       ),
     );

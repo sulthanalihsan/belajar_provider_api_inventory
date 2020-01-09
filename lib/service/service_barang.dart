@@ -28,7 +28,7 @@ class ServiceBarang {
     }
   }
 
-  Future<ResponseRequest> postBarang(nama, jumlah /*, File gambar*/) async {
+  Future<ResponseRequest> postBarang(nama, jumlah, gambar) async {
     final uri = Uri.http(_host, 'server_inventory/index.php/api/insertbarang');
 //    if (gambar == null){
 //      print('null');
@@ -40,8 +40,8 @@ class ServiceBarang {
 //    final response = await http
 //        .post(uri, body: {'nama': nama, 'jumlah': jumlah, 'gambar': base64Image});
 //
-    final response =
-        await http.post(uri, body: {'nama': nama, 'jumlah': jumlah});
+    final response = await http
+        .post(uri, body: {'nama': nama, 'jumlah': jumlah, 'gambar': gambar});
 
     if (response.statusCode == 200) {
       ResponseRequest responseRequest =

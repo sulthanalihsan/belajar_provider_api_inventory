@@ -68,8 +68,8 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
           await barangProv.updateBarang(_idBarang, _nmBarangContr.text,
               _jmlBarangContr.text, _urlBarangContr.text);
         } else {
-          // await barangProv.postBarang(
-          //     _nmBarangContr.text, _jmlBarangContr.text, _urlBarangContr.text);
+           await barangProv.postBarang(
+               _nmBarangContr.text, _jmlBarangContr.text, _urlBarangContr.text);
 //          await barangProv.postBarang(
 //              _nmBarangContr.text, _jmlBarangContr.text, _file);
         }
@@ -77,7 +77,7 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
         _sukses = barangProv.responseRequest.sukses;
 
         if (_sukses) {
-          Navigator.pop(context);
+          Navigator.pop(context,"hai");
           Toast.show('Berhasil', context);
         } else {
           Toast.show('Gagal', context);

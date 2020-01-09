@@ -4,7 +4,6 @@ import 'package:belajar_provider_api_inventory/service/service_barang.dart';
 import 'package:flutter/foundation.dart';
 
 class BarangProvider extends ChangeNotifier {
-
   ServiceBarang _service = ServiceBarang();
 
   List<Barang> _listBarang;
@@ -60,7 +59,7 @@ class BarangProvider extends ChangeNotifier {
 
   Future<void> postBarang(nama, jumlah, gambar) async {
 //    final response = await _service.postBarang(nama, jumlah, gambar);
-    final response = await _service.postBarang(nama, jumlah);
+    final response = await _service.postBarang(nama, jumlah, gambar);
     _responseRequest = response;
   }
 
