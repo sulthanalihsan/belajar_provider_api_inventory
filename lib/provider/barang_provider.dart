@@ -19,9 +19,12 @@ class BarangProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: missing_return
   Future<List<Barang>> getListBarang() async {
     listBarang = await _service.getListBarang();
-    return listBarang;
+    if (listBarang != null) {
+      return listBarang;
+    }
   }
 
   List<Barang> _listBarangSearch;

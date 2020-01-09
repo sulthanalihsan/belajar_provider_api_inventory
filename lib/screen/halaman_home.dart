@@ -12,43 +12,8 @@ import 'package:provider/provider.dart';
 class HalamanHome extends StatelessWidget {
   static const String id = "HOME";
 
-  //  BarangProvider barangProv;
-
-//  List<Barang> listBarang;
-
-//  @override
-//  void initState()  {
-//    super.initState();
-
-//    Future.microtask(() {
-
-
-//  void getData() async {
-//  }
-
-//    });
-//  getData();
-
-//    print('yeah' + barangProv.toString());
-
-//    barangProv.getListBarang();
-//  }
-
   @override
   Widget build(BuildContext context) {
-
-    BarangProvider barangProv =
-    Provider.of<BarangProvider>(context, listen: false);
-    barangProv.getListBarang();
-
-//    BarangProvider barangProv =
-//        Provider.of<BarangProvider>(context);
-//    barangProv.getListBarang();
-//    print('yeah' + barangProv.listBarang.toString());
-
-    List<Barang> listBarang = barangProv.listBarang;
-
-//    List<Barang> listBarang = barangProv.listBarang;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,33 +39,42 @@ class HalamanHome extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: listBarang != null
-            ? Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemCount: listBarang.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      splashColor: Colors.green,
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: itemBarang(listBarang[index]),
-                      onTap: () {
-                        barangProv.detailBarang = listBarang[index];
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HalamanTambahEdit(
-                                      listBarang[index],
-                                    )));
+          child: FutureBuilder<List<Barang>>(
+              future: Provider.of<BarangProvider>(context)
+                  .getListBarang(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final listBarang = snapshot.data;
+
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      itemCount: listBarang.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          splashColor: Colors.green,
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: itemBarang(listBarang[index]),
+                          onTap: () {
+//                            Provider.of<BarangProvider>(context).detailBarang =
+//                                listBarang[index];
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HalamanTambahEdit(
+                                          listBarang[index],
+                                        )));
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
-              )
-            : CircularProgressIndicator(),
-      ),
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              })),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
