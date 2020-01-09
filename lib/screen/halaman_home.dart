@@ -58,8 +58,6 @@ class HalamanHome extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                           child: itemBarang(listBarang[index]),
                           onTap: () {
-//                            Provider.of<BarangProvider>(context).detailBarang =
-//                                listBarang[index];
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

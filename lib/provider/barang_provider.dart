@@ -25,6 +25,7 @@ class BarangProvider extends ChangeNotifier {
     if (listBarang != null) {
       return listBarang;
     }
+//    notifyListeners();
   }
 
   List<Barang> _listBarangSearch;
@@ -77,12 +78,12 @@ class BarangProvider extends ChangeNotifier {
     _responseRequest = response;
   }
 
-  Barang _detailBarang;
-
-  Barang get detailBarang => _detailBarang;
-
-  set detailBarang(Barang barang) {
-    _detailBarang = barang;
-    notifyListeners();
-  }
+//  Barang _detailBarang;
+//
+//  Barang get detailBarang => _detailBarang;
+//
+//  set detailBarang(Barang barang) {
+//    _detailBarang = barang;
+//    notifyListeners();
+//  }
 }

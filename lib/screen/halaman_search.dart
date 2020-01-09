@@ -39,7 +39,7 @@ class HalamanSearch extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   child: itemBarang(listBarang[index]),
                   onTap: () {
-                    barangProv.detailBarang = listBarang[index];
+//                    barangProv.detailBarang = listBarang[index];
                     Navigator.push(
                         context,
                         MaterialPageRoute(

@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        initialRoute: HalamanLogin.id,
+        initialRoute: HalamanHome.id,
         routes: {
           HalamanSplash.id: (context) => HalamanSplash(),
           HalamanHome.id: (context) => HalamanHome(),
