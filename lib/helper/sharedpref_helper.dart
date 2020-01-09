@@ -4,7 +4,8 @@ import 'dart:convert';
 class SharedPrefHelper {
   read(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return json.decode(prefs.getString(key));
+    String prefString = prefs.getString(key);
+    return json.decode(prefString);
   }
 
   save(String key, value) async {

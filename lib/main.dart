@@ -1,3 +1,4 @@
+import 'package:belajar_provider_api_inventory/helper/sharedpref_helper.dart';
 import 'package:belajar_provider_api_inventory/provider/barang_provider.dart';
 import 'package:belajar_provider_api_inventory/screen/halaman_home.dart';
 import 'package:belajar_provider_api_inventory/screen/halaman_login.dart';
@@ -5,17 +6,31 @@ import 'package:belajar_provider_api_inventory/screen/halaman_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPrefHelper _sharedPref = SharedPrefHelper();
+  var loginPref = await _sharedPref?.read('login_pref');
 
-class MyApp extends StatefulWidget {
-
-  @override
-  _MyAppState createState() => _MyAppState();
-
+  runApp(ChangeNotifierProvider(
+    create: (_) => BarangProvider(),
+    child: MaterialApp(
+      title: 'Aplikasi Inventory',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      initialRoute: loginPref == null ? HalamanLogin.id : HalamanHome.id,
+      routes: {
+        HalamanSplash.id: (context) => HalamanSplash(),
+        HalamanHome.id: (context) => HalamanHome(),
+        HalamanLogin.id: (context) => HalamanLogin(),
+        // HalamanTambahEdit.id: (context) => HalamanTambahEdit(),
+      },
+    ),
+  ));
 }
 
-class _MyAppState extends State<MyApp> {
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -26,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        initialRoute: HalamanHome.id,
+        initialRoute: HalamanLogin.id,
         routes: {
           HalamanSplash.id: (context) => HalamanSplash(),
           HalamanHome.id: (context) => HalamanHome(),
@@ -36,5 +51,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
 }

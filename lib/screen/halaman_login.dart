@@ -22,7 +22,7 @@ class _HalamanLoginState extends State<HalamanLogin> {
   void cekLoginSession() async {
     var loginPref = await _sharedPref.read('login_pref');
     if (loginPref != null) {
-      Navigator.of(context).pushReplacementNamed(HalamanHome.id);
+      Navigator.of(context).popAndPushNamed(HalamanHome.id);
     }
   }
 
@@ -99,7 +99,7 @@ class _HalamanLoginState extends State<HalamanLogin> {
                         if (statusLogin.sukses) {
                           await _sharedPref.save('login_pref', true);
                           Navigator.of(context)
-                              .pushReplacementNamed(HalamanHome.id);
+                              .popAndPushNamed(HalamanHome.id);
                         } else {
                           setState(() {
                             showSpinner = false;

@@ -14,7 +14,6 @@ class HalamanHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Aplikasi Inventory'),
@@ -40,9 +39,10 @@ class HalamanHome extends StatelessWidget {
       ),
       body: Center(
           child: FutureBuilder<List<Barang>>(
-              future: Provider.of<BarangProvider>(context)
+              future: Provider.of<BarangProvider>(context, listen: false)
                   .getListBarang(),
               builder: (context, snapshot) {
+                print("connection" + snapshot.connectionState.toString());
                 if (snapshot.connectionState == ConnectionState.done) {
                   final listBarang = snapshot.data;
 

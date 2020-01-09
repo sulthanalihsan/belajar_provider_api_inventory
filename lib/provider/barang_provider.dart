@@ -4,9 +4,6 @@ import 'package:belajar_provider_api_inventory/service/service_barang.dart';
 import 'package:flutter/foundation.dart';
 
 class BarangProvider extends ChangeNotifier {
-  BarangProvider() {
-    getListBarang();
-  }
 
   ServiceBarang _service = ServiceBarang();
 
@@ -25,7 +22,6 @@ class BarangProvider extends ChangeNotifier {
     if (listBarang != null) {
       return listBarang;
     }
-//    notifyListeners();
   }
 
   List<Barang> _listBarangSearch;
