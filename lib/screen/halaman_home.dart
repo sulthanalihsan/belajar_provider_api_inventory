@@ -9,37 +9,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HalamanHome extends StatefulWidget {
+class HalamanHome extends StatelessWidget {
   static const String id = "HOME";
 
-  @override
-  _HalamanHomeState createState() => _HalamanHomeState();
-}
-
-class _HalamanHomeState extends State<HalamanHome> {
-  BarangProvider barangProv;
+  //  BarangProvider barangProv;
 
 //  List<Barang> listBarang;
 
-  void getData() async {
-    barangProv.getListBarang();
-  }
-
-  @override
-  void initState()  {
-    super.initState();
+//  @override
+//  void initState()  {
+//    super.initState();
 
 //    Future.microtask(() {
-    barangProv = Provider.of<BarangProvider>(context, listen: false);
+
+
+//  void getData() async {
+//  }
+
 //    });
-    getData();
+//  getData();
+
 //    print('yeah' + barangProv.toString());
 
 //    barangProv.getListBarang();
-  }
+//  }
 
   @override
   Widget build(BuildContext context) {
+
+    BarangProvider barangProv =
+    Provider.of<BarangProvider>(context, listen: false);
+    barangProv.getListBarang();
+
 //    BarangProvider barangProv =
 //        Provider.of<BarangProvider>(context);
 //    barangProv.getListBarang();
