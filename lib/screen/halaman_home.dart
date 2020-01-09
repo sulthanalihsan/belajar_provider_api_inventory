@@ -32,7 +32,7 @@ class HalamanHome extends StatelessWidget {
               var loginPref = await _sharedPref.remove('login_pref');
               // var loginPref = await _sharedPref.read('login_pref');
               print(loginPref);
-              Navigator.of(context).popAndPushNamed(HalamanLogin.id);
+              Navigator.of(context).pushReplacementNamed(HalamanLogin.id);
             },
           )
         ],

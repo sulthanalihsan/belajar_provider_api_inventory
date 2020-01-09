@@ -1,11 +1,16 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefHelper {
   read(String key) async {
     final prefs = await SharedPreferences.getInstance();
     String prefString = prefs.getString(key);
-    return json.decode(prefString);
+    print("anu"+prefString.toString());
+    if (prefString == null)
+      return json.decode('false');
+    else
+      return json.decode(prefString);
   }
 
   save(String key, value) async {

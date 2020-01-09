@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPrefHelper _sharedPref = SharedPrefHelper();
-  var loginPref = await _sharedPref?.read('login_pref');
+  var loginPref = await _sharedPref.read('login_pref');
+  print("loginpref ${loginPref.toString()} ${loginPref.runtimeType}");
 
   runApp(ChangeNotifierProvider(
     create: (_) => BarangProvider(),
@@ -19,13 +20,14 @@ Future<void> main() async {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      initialRoute: loginPref == null ? HalamanLogin.id : HalamanHome.id,
+//      initialRoute:
       routes: {
         HalamanSplash.id: (context) => HalamanSplash(),
         HalamanHome.id: (context) => HalamanHome(),
         HalamanLogin.id: (context) => HalamanLogin(),
         // HalamanTambahEdit.id: (context) => HalamanTambahEdit(),
       },
+      home: loginPref ? HalamanHome() : HalamanLogin(),
     ),
   ));
 }

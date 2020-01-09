@@ -19,17 +19,17 @@ class _HalamanLoginState extends State<HalamanLogin> {
   ServiceAuth _auth = ServiceAuth();
   SharedPrefHelper _sharedPref = SharedPrefHelper();
 
-  void cekLoginSession() async {
-    var loginPref = await _sharedPref.read('login_pref');
-    if (loginPref != null) {
-      Navigator.of(context).popAndPushNamed(HalamanHome.id);
-    }
-  }
+//  void cekLoginSession() async {
+//    var loginPref = await _sharedPref.read('login_pref');
+//    if (loginPref != null) {
+//      Navigator.of(context).popAndPushNamed(HalamanHome.id);
+//    }
+//  }
 
   @override
   void initState() {
     super.initState();
-    cekLoginSession();
+//    cekLoginSession();
   }
 
   @override
@@ -99,7 +99,7 @@ class _HalamanLoginState extends State<HalamanLogin> {
                         if (statusLogin.sukses) {
                           await _sharedPref.save('login_pref', true);
                           Navigator.of(context)
-                              .popAndPushNamed(HalamanHome.id);
+                              .pushReplacementNamed(HalamanHome.id);
                         } else {
                           setState(() {
                             showSpinner = false;
