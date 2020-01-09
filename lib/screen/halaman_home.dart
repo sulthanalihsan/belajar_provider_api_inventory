@@ -42,7 +42,6 @@ class HalamanHome extends StatelessWidget {
               future: Provider.of<BarangProvider>(context, listen: false)
                   .getListBarang(),
               builder: (context, snapshot) {
-                print("connection" + snapshot.connectionState.toString());
                 if (snapshot.connectionState == ConnectionState.done) {
                   final listBarang = snapshot.data;
 
