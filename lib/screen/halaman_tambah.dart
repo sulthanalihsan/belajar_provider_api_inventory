@@ -16,76 +16,74 @@ class HalamanTambahEdit extends StatefulWidget {
 
 class _HalamanTambahEditState extends State<HalamanTambahEdit> {
   final _formKey = GlobalKey<FormState>();
+
   bool _validate = false;
   bool _isUpdate = false;
 
-  Barang barang;
-
   String _idBarang;
-  final _nmBarangContr = TextEditingController();
-  final _jmlBarangContr = TextEditingController();
-  final _urlBarangContr = TextEditingController();
+  TextEditingController _nmBarang, _jmlBarang, _urlBarang;
 
-//  File _file;
-//  void _pilihImageCamera() async {
-//    _file = await ImagePicker.pickImage(source: ImageSource.camera);
-//  }
-//
-//  void _pilihImageGallery() async {
-//    _file = await ImagePicker.pickImage(source: ImageSource.gallery);
-//  }
+  BarangProvider barangProv;
+
+  void cekValidasi() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+
+      if (_isUpdate) {
+        await barangProv.updateBarang(
+            _idBarang, _nmBarang.text, _jmlBarang.text, _urlBarang.text);
+      } else {
+        await barangProv.postBarang(
+            _nmBarang.text, _jmlBarang.text, _urlBarang.text);
+      }
+
+      bool _sukses = barangProv.responseRequest.sukses;
+
+      if (_sukses) {
+        Navigator.pop(context);
+        Toast.show('Berhasil', context);
+      } else {
+        Toast.show('Gagal', context);
+      }
+    } else {
+      _validate = true;
+    }
+  }
+
+  String validator(String value) {
+    if (value.isEmpty)
+      return "jangan kosong";
+    else
+      return null;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final barangProv = Provider.of<BarangProvider>(context);
+
+    if (this.barangProv != barangProv) {
+      this.barangProv = barangProv;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    if (widget.barang != null) {
+
+    if(widget.barang != null){
       _isUpdate = true;
       _idBarang = widget.barang.barangId;
-      barang = widget.barang;
-      _nmBarangContr.text = barang.barangNama;
-      _jmlBarangContr.text = barang.barangJumlah;
-      _urlBarangContr.text = barang.barangGambar;
     }
+
+    _nmBarang = TextEditingController(text: widget.barang.barangNama);
+    _jmlBarang = TextEditingController(text: widget.barang.barangJumlah);
+    _urlBarang = TextEditingController(text: widget.barang.barangGambar);
   }
 
   @override
   Widget build(BuildContext context) {
     BarangProvider barangProv = Provider.of<BarangProvider>(context);
-
-    String validator(String value) {
-      if (value.isEmpty)
-        return "jangan kosong";
-      else
-        return null;
-    }
-
-    void cekValidasi() async {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        bool _sukses = false;
-
-        if (_isUpdate) {
-          await barangProv.updateBarang(_idBarang, _nmBarangContr.text,
-              _jmlBarangContr.text, _urlBarangContr.text);
-        } else {
-           await barangProv.postBarang(
-               _nmBarangContr.text, _jmlBarangContr.text, _urlBarangContr.text);
-//          await barangProv.postBarang(
-//              _nmBarangContr.text, _jmlBarangContr.text, _file);
-        }
-
-        _sukses = barangProv.responseRequest.sukses;
-
-        if (_sukses) {
-          Navigator.pop(context,"hai");
-          Toast.show('Berhasil', context);
-        } else {
-          Toast.show('Gagal', context);
-        }
-      } else {
-        _validate = true;
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +116,7 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: TextFormField(
-                    controller: _nmBarangContr,
+                    controller: _nmBarang,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: 'Nama Barang'),
@@ -128,7 +126,7 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: TextFormField(
-                    controller: _jmlBarangContr,
+                    controller: _jmlBarang,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -139,7 +137,7 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: TextFormField(
-                    controller: _urlBarangContr,
+                    controller: _urlBarang,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(), labelText: 'Url Barang'),
@@ -160,22 +158,6 @@ class _HalamanTambahEditState extends State<HalamanTambahEdit> {
                         borderRadius: BorderRadius.circular(10.0)),
                   ),
                 ),
-//                Container(
-//                  padding: EdgeInsets.only(top: 12.0),
-//                  width: MediaQuery.of(context).size.width,
-//                  height: 50.0,
-//                  child: RaisedButton(
-//                    color: Theme.of(context).primaryColor,
-//                    child: Text(
-//                      'Pilih Gambar',
-//                      style: TextStyle(color: Colors.white),
-//                    ),
-//                    onPressed: _pilihImageGallery,
-//                    shape: RoundedRectangleBorder(
-//                        borderRadius: BorderRadius.circular(10.0)),
-//                  ),
-//                ),
-//                _file == null ? Text('No Image Selected') : Image.file(_file)
               ],
             ),
           ),

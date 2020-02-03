@@ -19,19 +19,6 @@ class _HalamanLoginState extends State<HalamanLogin> {
   ServiceAuth _auth = ServiceAuth();
   SharedPrefHelper _sharedPref = SharedPrefHelper();
 
-//  void cekLoginSession() async {
-//    var loginPref = await _sharedPref.read('login_pref');
-//    if (loginPref != null) {
-//      Navigator.of(context).popAndPushNamed(HalamanHome.id);
-//    }
-//  }
-
-  @override
-  void initState() {
-    super.initState();
-//    cekLoginSession();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -100,6 +87,7 @@ class _HalamanLoginState extends State<HalamanLogin> {
                           await _sharedPref.save('login_pref', true);
                           Navigator.of(context)
                               .pushReplacementNamed(HalamanHome.id);
+
                         } else {
                           setState(() {
                             showSpinner = false;

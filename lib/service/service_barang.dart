@@ -30,16 +30,7 @@ class ServiceBarang {
 
   Future<ResponseRequest> postBarang(nama, jumlah, gambar) async {
     final uri = Uri.http(_host, 'server_inventory/index.php/api/insertbarang');
-//    if (gambar == null){
-//      print('null');
-//      return null;
-//    }
-//    String base64Image = base64Encode(gambar.readAsBytesSync());
-    // String fileName = file.path.split("/").last;
 
-//    final response = await http
-//        .post(uri, body: {'nama': nama, 'jumlah': jumlah, 'gambar': base64Image});
-//
     final response = await http
         .post(uri, body: {'nama': nama, 'jumlah': jumlah, 'gambar': gambar});
 

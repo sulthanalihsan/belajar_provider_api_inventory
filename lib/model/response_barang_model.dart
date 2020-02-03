@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final responseBarang = responseBarangFromJson(jsonString);
-
 import 'dart:convert';
 
 ResponseBarang responseBarangFromJson(String str) => 

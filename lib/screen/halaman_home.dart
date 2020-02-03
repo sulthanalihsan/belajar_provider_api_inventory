@@ -13,8 +13,6 @@ class HalamanHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<BarangProvider>(context,listen: false).getListBarang();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Aplikasi Inventory'),
@@ -30,48 +28,54 @@ class HalamanHome extends StatelessWidget {
             icon: Icon(Icons.lock_open),
             onPressed: () async {
               SharedPrefHelper _sharedPref = SharedPrefHelper();
-              var loginPref = await _sharedPref.remove('login_pref');
-              // var loginPref = await _sharedPref.read('login_pref');
-              print(loginPref);
+              await _sharedPref.remove('login_pref');
               Navigator.of(context).pushReplacementNamed(HalamanLogin.id);
             },
           )
         ],
       ),
-      body: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemCount: Provider.of<BarangProvider>(context).listBarang.length,
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              splashColor: Colors.green,
-              borderRadius: BorderRadius.circular(10.0),
-              child: itemBarang(
-                  Provider.of<BarangProvider>(context).listBarang[index]),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HalamanTambahEdit(
-                              Provider.of<BarangProvider>(context).listBarang[index],
-                            )));
-              },
-            );
-          },
-        ),
-      )),
+      body: GridBarang(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
-          String message = await Navigator.push(context,
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => HalamanTambahEdit(null)));
-
-          print("pesan $message");
         },
       ),
     );
+  }
+}
+
+class GridBarang extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final barangProv = Provider.of<BarangProvider>(context);
+
+    return Center(
+        child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: barangProv.isFetching
+          ? CircularProgressIndicator()
+          : GridView.builder(
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemCount: barangProv.listBarang.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  splashColor: Colors.green,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: itemBarang(barangProv.listBarang[index]),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HalamanTambahEdit(
+                                  barangProv.listBarang[index],
+                                )));
+                  },
+                );
+              },
+            ),
+    ));
   }
 }

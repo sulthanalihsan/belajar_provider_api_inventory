@@ -25,7 +25,7 @@ class HalamanSearch extends StatelessWidget {
       ),
       body: Consumer<BarangProvider>(
         builder: (context, barangProv, _) {
-          barangProv.getListBarang();
+//          barangProv.getListBarang();
           List<Barang> listBarang = barangProv.listBarangSearch;
 
           if (listBarang != null) {

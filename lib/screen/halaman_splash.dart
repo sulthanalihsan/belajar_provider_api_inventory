@@ -1,4 +1,4 @@
-import 'package:belajar_provider_api_inventory/screen/halaman_home.dart';
+import 'package:belajar_provider_api_inventory/screen/halaman_login.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -9,7 +9,7 @@ class HalamanSplash extends StatelessWidget {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 2,
-      navigateAfterSeconds: HalamanHome(),
+      navigateAfterSeconds: HalamanLogin(),
       title: new Text(
         'Welcome In SplashScreen',
         style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
